@@ -1,4 +1,4 @@
-﻿﻿#pragma kernel CSMain
+#pragma kernel CSMain
 
 RWTexture2D<float4> _Result;
 uint _FrameNum;
@@ -72,9 +72,7 @@ void CSMain(uint3 id : SV_DispatchThreadID)
         result = wolfram(pixel);
     }
 
-    //cast to float 4, convert to differnt data type
-    //int 0 -> float4(0,0,0,0), int 1 -> float4(1,1,1,1)
     _Result[pixel] = (float4) result;
+
+    // int 0 -> float4(0,0,0,0), int 1 -> float4(1,1,1,1)
 }
-
-

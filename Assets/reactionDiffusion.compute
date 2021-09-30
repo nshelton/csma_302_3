@@ -1,0 +1,29 @@
+#pragma kernel CSMain
+
+RWTexture2D<float4> _source;
+RWTexture2D<float4> _destination;
+
+float _dt;
+float _diffusionRateA;
+float _diffusionRateB;
+
+float _f;
+float _k;
+
+[numthreads(8, 8, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+    float4 laplacian = -4 * _source[id.xy]
+        + _source[id.xy + int2(0, 1)]
+        + _source[id.xy + int2(0, -1)]
+        + _source[id.xy + int2(1, 0)]
+        + _source[id.xy + int2(-1, 0)];
+
+    float A = _source[id.xy].x;
+    float B = _source[id.xy].y;
+
+    float dA = laplacian.x * _diffusionRateA - A * B * B + _f * (1 - A);
+    float dB = laplacian.y * _diffusionRateB + A * B * B - (_f + _k) * B;
+
+    _destination[id.xy] = _source[id.xy] + float4(dA, dB, 0, 0);
+}
