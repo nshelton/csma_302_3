@@ -148,3 +148,19 @@ Received Import Request.
 Start importing Assets/wolfram.compute using Guid(ed58cccf42ba07f428c97984c6e84b30) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '38111f97ea237615dd701e50b3a2690d') in 0.007633 seconds 
   Import took 0.009306 seconds .
 
+========================================================================
+Received Import Request.
+  Time since last request: 169.560324 seconds.
+  path: Assets/conway.cs
+  artifactKey: Guid(72195d93ec4317c4cba46979af2f06a8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/conway.cs using Guid(72195d93ec4317c4cba46979af2f06a8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bca57c392450b81392ede43d143c3dc6') in 0.010062 seconds 
+  Import took 0.012091 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.014854 seconds.
+  path: Assets/conway.cs
+  artifactKey: Guid(72195d93ec4317c4cba46979af2f06a8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/conway.cs using Guid(72195d93ec4317c4cba46979af2f06a8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bca57c392450b81392ede43d143c3dc6') in 0.002380 seconds 
+  Import took 0.004137 seconds .
+
