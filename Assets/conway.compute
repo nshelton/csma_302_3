@@ -1,0 +1,15 @@
+#pragma kernel CSMain
+
+RWTexture2D<float4> _source;
+RWTexture2D<float4> _destination;
+
+
+[numthreads(8,8,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+
+    // look up neighbors, compute new color
+
+
+    _destination[id.xy] = _source[id.xy];
+}
