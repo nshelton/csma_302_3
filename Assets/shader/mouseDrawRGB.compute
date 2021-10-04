@@ -1,0 +1,17 @@
+#pragma kernel CSMain
+
+RWTexture2D<float4> _destination;
+float3 _mouse;
+float4 _Color;
+
+[numthreads(8, 8, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+    uint2 pixel = _mouse.xy + id.xy - uint2(4, 4);
+
+    float value = smoothstep(4, 3, length(int2(id.xy) - int2(4, 4)));
+
+    if (value == 1) {
+        _destination[pixel] = _Color;
+    }
+}

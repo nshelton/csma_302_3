@@ -332,7 +332,7 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 5
-  m_Depth: -1
+  m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -370,18 +370,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 664dfaa3e25a9f1499e12a212871b27d, type: 3}
+  m_Script: {fileID: 11500000, guid: 3055f24dd83083046a3d786032ec6749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shader: {fileID: 7200000, guid: 8ab814967e2469542b5394f550d4e09b, type: 3}
+  _shader: {fileID: 7200000, guid: b36ea6b1ed9f4e84286d6cb0922976fc, type: 3}
   _clearShader: {fileID: 7200000, guid: 3a268faa7fe308645950fd67eca435b6, type: 3}
   _drawShader: {fileID: 7200000, guid: 748be70868abf09499d7d1538beddca8, type: 3}
-  _visualizationMaterial: {fileID: 2100000, guid: aa01b417b451a044097b01e548a9e057,
+  _visualizationMaterial: {fileID: 2100000, guid: 99d15aca8729af54c89bb2f55c9a8526,
     type: 2}
   _width: 512
   _height: 512
-  _feed: 0.036
-  _kill: 0.0585
-  _diffusionRateA: 0.17
-  _diffusionRateB: 0.05
-  _iterations: 10
