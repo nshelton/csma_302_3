@@ -7,13 +7,14 @@ public class reactionDiffusion : MonoBehaviour
     [SerializeField] ComputeShader _shader;
     [SerializeField] ComputeShader _clearShader;
     [SerializeField] ComputeShader _drawShader;
+    [SerializeField] Material _visualizationMaterial;
     RenderTexture _resultA;
     RenderTexture _resultB;
 
     [SerializeField] int _width = 512;
     [SerializeField] int _height = 512;
 
-    [SerializeField, Range(0,0.1f)] float _feed = 0.018f;
+    [SerializeField, Range(0,0.13f)] float _feed = 0.018f;
     [SerializeField, Range(0,0.1f)] float _kill = 0.053f;
     [SerializeField] float _diffusionRateA = 0.1f;
     [SerializeField] float _diffusionRateB = 0.1f;
@@ -81,6 +82,6 @@ public class reactionDiffusion : MonoBehaviour
             Swap(ref _resultB, ref _resultA);
         }
 
-        Graphics.Blit(_resultA, destination);
+        Graphics.Blit(_resultA, destination, _visualizationMaterial);
     }
 }

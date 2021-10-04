@@ -1,9 +1,0 @@
-﻿#pragma kernel Clear
- 
-RWTexture2D<float4> _Result;
-
-[numthreads(8,8,1)]
-void Clear(uint3 id : SV_DispatchThreadID)
-{
-    _Result[id.xy] = float4(0, 0, 0, 0);
-}
