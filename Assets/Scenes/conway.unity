@@ -155,8 +155,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shader: {fileID: 7200000, guid: 0392a90707a67804a946d226a9987708, type: 3}
-  _clearShader: {fileID: 7200000, guid: ea0b1d2b142685847bf0451754e51f34, type: 3}
+  _clearShader: {fileID: 7200000, guid: 16feea3fcc0adfa47843a9bf08c08b9b, type: 3}
   _drawShader: {fileID: 7200000, guid: be5997f53f7e3894b9a222ebe50a0dc9, type: 3}
+  _visualizationMaterial: {fileID: 2100000, guid: 5a266210cd280fc42ba008c18dc847f0,
+    type: 2}
   _width: 512
   _height: 512
 --- !u!20 &963194227

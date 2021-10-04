@@ -5,9 +5,5 @@ RWTexture2D<float4> _Result;
 [numthreads(8,8,1)]
 void Clear(uint3 id : SV_DispatchThreadID)
 {
-
-    float r1 = sin((id.x + sin( id.y)) * 645.5) * 0.5 + 0.5;
-    float r2 = sin((id.x + sin( id.y)) * 679.245 + 547.62)* 0.5 + 0.5;
-
-    _Result[id.xy] = float4(r1, r2, 0, 0);
+    _Result[id.xy] = float4(0,1, 0, 0);
 }

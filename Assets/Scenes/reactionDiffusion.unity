@@ -217,6 +217,8 @@ MonoBehaviour:
   _shader: {fileID: 7200000, guid: 06637d4368bd69340ae98c042ade2e62, type: 3}
   _clearShader: {fileID: 7200000, guid: 16feea3fcc0adfa47843a9bf08c08b9b, type: 3}
   _drawShader: {fileID: 7200000, guid: be5997f53f7e3894b9a222ebe50a0dc9, type: 3}
+  _visualizationMaterial: {fileID: 2100000, guid: 3c340b37d0f703041bac338148fdc2fb,
+    type: 2}
   _width: 512
   _height: 512
   _feed: 0.036

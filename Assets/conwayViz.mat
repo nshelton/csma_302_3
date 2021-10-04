@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: reactionDiffusionView
+  m_Name: conwayViz
   m_Shader: {fileID: 4800000, guid: 241b7590b75036941ac3f98df4c81107, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -76,6 +76,7 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
+    - _channel: 1
     - _colorSelection: 0.362
     - _scale: 1.07
     - _threshold: 0.525
