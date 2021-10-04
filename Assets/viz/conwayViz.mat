@@ -77,8 +77,8 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     - _channel: 1
-    - _colorSelection: 0.362
-    - _scale: 1.07
+    - _colorSelection: 0.852
+    - _scale: 3.2
     - _threshold: 0.525
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
