@@ -10,5 +10,7 @@ void CSMain (uint3 id : SV_DispatchThreadID)
 
     float value = smoothstep(4, 3, length(int2(id.xy) - int2(4, 4)));
 
+    //float4(value, value, value, value)
     _destination[pixel] += (float4)value;
+    
 }

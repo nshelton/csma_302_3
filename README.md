@@ -8,18 +8,51 @@ We're going to implement four types of cellular automata :
  - Rock-Paper-Scissors
  - Reaction Diffusion
 
+and also use *Procedural Rendering* to render in 3D. I will do one version in class and you will choose one other CA to turn into 3D. 
 
-more requirements, due date etc tbd.
- 
-## Due Date
+## Due Date (part 1 due before class 10.6) 
 
-**The assignment is due on Sunday October 10th before midnight.**
+In the RockPaperScissors scene, implement a rock paper scissors CA using the rockPaperScissrs.compute shader: 
+
+ - A cell changes color when the number of neighbouring cells that beats it is above a threshold. (start with 2)
+ - Green beats Red, Blue beats Green, Red beats Blue.
+ - Count the number of R, G, and B neighbors and set tne new coloor accoordingly.
+ - a cell can only be black OR red OR green, OR blue. 
+ - use keys 1,2,3 to select R, G ,B color. (this part has already been implemented in the branch main.
+
+
+**The full assignment is due on Sunday October 10th before midnight.**
 
 ## Resources
-tbd
+rock paper scissors: 
+https://softologyblog.wordpress.com/2018/03/23/rock-paper-scissors-cellular-automata/
  
+ Wolfram:
+https://mathworld.wolfram.com/ElementaryCellularAutomaton.html
+
+Reaction-Diffusion
+https://www.karlsims.com/rd.html
+
+Conway:
+http://pi.math.cornell.edu/~lipa/mec/lesson6.html
+
+
 ## Grading
-tbd
+15 points for each working cellular automata : 
+ - wolfram
+ - conway (with mouse input)
+ - reaction-diffusion (with mouse input)
+ - rock-paper-scissors (with mouse input)
+
+20 points for each 3D visualization
+ - one from class
+ - one that you pick
+
+10 points for code with comments 
+10 points for project organization
+
+there should be 6 scenes total, each with a different version or visualization.
+
 
 ## Submitting 
 (this is also in the syllabus, but consider this an updated version)

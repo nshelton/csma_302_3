@@ -45,12 +45,25 @@ The following packages were added:
   com.unity.timeline@1.2.18
   com.unity.ugui@1.0.0
 
+<<<<<<< HEAD
 === Mon Sep 27 10:11:29 2021
+=======
+=== Wed Sep 29 11:33:32 2021
+>>>>>>> 8163d85d96c9c44e12a80869de1e57a4f2235bd7
 
 Packages were changed.
 Update Mode: updateDependencies
 
 The following packages were updated:
+<<<<<<< HEAD
   com.unity.collab-proxy from version 1.2.16 to 1.8.0
   com.unity.ide.visualstudio from version 2.0.8 to 2.0.11
   com.unity.test-framework from version 1.1.24 to 1.1.27
+=======
+  com.unity.collab-proxy from version 1.2.16 to 1.7.1
+  com.unity.ide.rider from version 1.2.1 to 2.0.7
+  com.unity.ide.visualstudio from version 2.0.8 to 2.0.11
+  com.unity.test-framework from version 1.1.24 to 1.1.27
+  com.unity.textmeshpro from version 2.1.6 to 3.0.6
+  com.unity.timeline from version 1.2.18 to 1.4.8
+>>>>>>> 8163d85d96c9c44e12a80869de1e57a4f2235bd7
