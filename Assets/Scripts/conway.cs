@@ -17,7 +17,6 @@ public class conway : MonoBehaviour
 
 
     int threadDim = 8;
-    int _frameNum = 0;
 
     Vector3 _mousePos;
 
@@ -65,11 +64,11 @@ public class conway : MonoBehaviour
 
         _shader.SetTexture(0, "_source", _resultA);
         _shader.SetTexture(0, "_destination", _resultB);
-        _shader.SetFloat("width", _width);
-        _shader.SetFloat("height", _height);
+        _shader.SetFloat("_width", _width);
+        _shader.SetFloat("_height", _height);
         _shader.Dispatch(0, _width / threadDim, _height / threadDim, 1);
         Swap(ref _resultB, ref _resultA);
 
-        Graphics.Blit(_resultA, destination);
+        Graphics.Blit(_resultA, destination, _visualizationMaterial);
     }
 }

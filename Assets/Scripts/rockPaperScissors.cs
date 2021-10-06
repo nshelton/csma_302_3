@@ -43,17 +43,17 @@ public class rockPaperScissors : MonoBehaviour
 
     private void Update()
     {
-        if ( Input.GetKeyDown(KeyCode.Alpha1))
+        if ( Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
         {
             _currentColor = new Vector4(1, 0, 0, 1);
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
         {
             _currentColor = new Vector4(0, 1, 0, 1);
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))
         {
             _currentColor = new Vector4(0, 0, 1, 1);
         }
