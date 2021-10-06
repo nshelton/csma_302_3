@@ -84,8 +84,6 @@ void CSMain (uint3 id : SV_DispatchThreadID)
     if (isRed && blueNeighbors > threshold) {
         result = float4(1, 0, 0, 1);
     }
-
-
     
 
     // count red and green neighbors also
