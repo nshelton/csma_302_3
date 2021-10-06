@@ -52,6 +52,7 @@ http://pi.math.cornell.edu/~lipa/mec/lesson6.html
 10 points for project organization
 
 there should be 6 scenes total, each with a different version or visualization.
+3D visualizations need to have multiple colors and lighting
 
 
 ## Submitting 
