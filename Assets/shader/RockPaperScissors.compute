@@ -24,11 +24,6 @@ uint2 wrap(int2 pixel)
     return pixel;
 }
 
-int getNeighbors(float4 _source, uint3 id) {
-
-}
-
-
 [numthreads(8,8,1)]
 void CSMain (uint3 id : SV_DispatchThreadID)
 {
