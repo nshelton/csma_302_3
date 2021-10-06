@@ -1,0 +1,51 @@
+﻿#pragma kernel CSMain
+
+RWTexture2D<float4> _source;
+RWTexture2D<float4> _destination;
+
+float _width;
+float _height;
+
+uint2 wrap(int2 pixel) 
+{
+    if (pixel.x < 0) {
+        pixel.x += _width;
+    }
+    if (pixel.y < 0) {
+        pixel.y += _height;
+    }
+    if (pixel.x >= _width) {
+        pixel.x -= _width;
+    }
+    if (pixel.y >= _height) {
+        pixel.y -= _height;
+    }
+
+    return pixel;
+}
+
+
+[numthreads(8,8,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+
+    int neighbors = 0;
+    // count blue neighbors
+  /*  for (int dx = -1; dx <= 1; dx++) {
+        for (int dy = -1; dy <= 1; dy++) {
+            if (dx != 0 || dy != 0) {
+                neighbors += _source[ wrap( id.xy + int2(dx, dy))].x;
+            }
+        }
+    }
+    */
+    // count red and green neighbors also
+    // flip if the number of neighbouring cells that beats it is above a threshold. (start with 2)
+    // Green beats Red, Blue beats Green, Red beats Blue.
+
+    float4 result = _source[id.xy];
+
+
+
+    _destination[id.xy] = result;
+}

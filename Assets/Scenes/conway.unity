@@ -154,11 +154,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72195d93ec4317c4cba46979af2f06a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shader: {fileID: 7200000, guid: 0392a90707a67804a946d226a9987708, type: 3}
+  _shader: {fileID: 7200000, guid: 6e8e792a9a16f624ca1ada4e887d223b, type: 3}
   _clearShader: {fileID: 7200000, guid: 16feea3fcc0adfa47843a9bf08c08b9b, type: 3}
   _drawShader: {fileID: 7200000, guid: be5997f53f7e3894b9a222ebe50a0dc9, type: 3}
-  _width: 512
-  _height: 512
+  _visualizationMaterial: {fileID: 2100000, guid: a22464baca4cf0647b01fdf48828ecfe,
+    type: 2}
+  _width: 256
+  _height: 256
 --- !u!20 &963194227
 Camera:
   m_ObjectHideFlags: 0

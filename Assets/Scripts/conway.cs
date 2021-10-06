@@ -7,6 +7,7 @@ public class conway : MonoBehaviour
     [SerializeField] ComputeShader _shader;
     [SerializeField] ComputeShader _clearShader;
     [SerializeField] ComputeShader _drawShader;
+    [SerializeField] Material _visualizationMaterial;
 
     RenderTexture _resultA;
     RenderTexture _resultB;
@@ -64,6 +65,8 @@ public class conway : MonoBehaviour
 
         _shader.SetTexture(0, "_source", _resultA);
         _shader.SetTexture(0, "_destination", _resultB);
+        _shader.SetFloat("width", _width);
+        _shader.SetFloat("height", _height);
         _shader.Dispatch(0, _width / threadDim, _height / threadDim, 1);
         Swap(ref _resultB, ref _resultA);
 
