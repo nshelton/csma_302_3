@@ -28,25 +28,73 @@ uint2 wrap(int2 pixel)
 [numthreads(8, 8, 1)]
 void CSMain(uint3 id : SV_DispatchThreadID)
 {
-    int neighbors = 0;
+    // Count red, blue and green neighbors
+    // Flip if the number of neighbouring cells that beats it is above a threshold. (start with 2)
+    // Green beats red, blue beats green, red beats blue.
 
-    // count blue neighbors
-  /*  for (int dx = -1; dx <= 1; dx++) {
-        for (int dy = -1; dy <= 1; dy++) {
-            if (dx != 0 || dy != 0) {
-                neighbors += _source[ wrap( id.xy + int2(dx, dy))].x;
+    int neighborsGreen = 0;
+    int neighborsRed = 0;
+    int neighborsBlue = 0;
+
+   // counting green neighbors
+    for (int greenX = -1; greenX <= 1; greenX++) {
+        for (int greenY = -1; greenY <= 1; greenY++) {
+            if (greenX != 0 || greenY != 0) {
+                neighborsGreen += _source[wrap(id.xy + int2(greenX, greenY))].x;
             }
         }
     }
-    */
 
-    // count red and green neighbors also
-    // flip if the number of neighbouring cells that beats it is above a threshold. (start with 2)
-    // Green beats Red, Blue beats Green, Red beats Blue.
+   // counting red neighbors
+    for (int redX = -1; redX <= 1; redX++) {
+        for (int redY = -1; redY <= 1; redY++) {
+            if (redX != 0 || redY != 0) {
+                neighborsRed += _source[wrap(id.xy + int2(redX, redY))].x;
+            }
+        }
+    }
+  
+   // counting blue neighbors
+    for (int blueX = -1; blueX <= 1; blueX++) {
+        for (int blueY = -1; blueY <= 1; blueY++) {
+            if (blueX != 0 || blueY != 0) {
+                neighborsBlue += _source[wrap(id.xy + int2(blueX, blueY))].x;
+            }
+        }
+    }
 
-    float4 result = _source[id.xy];
+   float4 result = _source[id.xy];
+   float red = _source[id.xy].x;
+   float green = _source[id.xy].y;
+   float blue = _source[id.xy].z;
+   int threshold = 2;
 
+   // Green beats red
+   if (red == 1) {
+       if (neighborsGreen > threshold) {
+           red = 0;
+           green = 1;
+           result = float4(0, 1, 0, 1);
+       }
+   }
 
+   // Blue beats green
+   if (green == 1) {
+       if (neighborsBlue > threshold) {
+           green = 0;
+           blue = 1;
+           result = float4(0, 0, 1, 1);
+       }
+   }
 
-    _destination[id.xy] = result;
+   // Red beats blue
+   if (blue == 1) {
+       if (neighborsRed > threshold) {
+           blue = 0;
+           red = 1;
+           result = float4(1, 0, 0, 1);
+       }
+   }
+
+   _destination[id.xy] = result;
 }
