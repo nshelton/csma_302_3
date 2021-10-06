@@ -24,6 +24,11 @@ uint2 wrap(int2 pixel)
     return pixel;
 }
 
+/*float rand(in float2 uv)
+{
+    float2 noise = (frac(sin(dot(uv, float2(12.9898, 78.233) * 2.0)) * 43758.5453));
+    return abs(noise.x + noise.y) * 0.5;
+}*/
 
 [numthreads(8, 8, 1)]
 void CSMain(uint3 id : SV_DispatchThreadID)
@@ -40,7 +45,7 @@ void CSMain(uint3 id : SV_DispatchThreadID)
     for (int greenX = -1; greenX <= 1; greenX++) {
         for (int greenY = -1; greenY <= 1; greenY++) {
             if (greenX != 0 || greenY != 0) {
-                neighborsGreen += _source[wrap(id.xy + int2(greenX, greenY))].x;
+                neighborsGreen += _source[wrap(id.xy + int2(greenX, greenY))].g;
             }
         }
     }
@@ -49,7 +54,7 @@ void CSMain(uint3 id : SV_DispatchThreadID)
     for (int redX = -1; redX <= 1; redX++) {
         for (int redY = -1; redY <= 1; redY++) {
             if (redX != 0 || redY != 0) {
-                neighborsRed += _source[wrap(id.xy + int2(redX, redY))].x;
+                neighborsRed += _source[wrap(id.xy + int2(redX, redY))].r;
             }
         }
     }
@@ -58,7 +63,7 @@ void CSMain(uint3 id : SV_DispatchThreadID)
     for (int blueX = -1; blueX <= 1; blueX++) {
         for (int blueY = -1; blueY <= 1; blueY++) {
             if (blueX != 0 || blueY != 0) {
-                neighborsBlue += _source[wrap(id.xy + int2(blueX, blueY))].x;
+                neighborsBlue += _source[wrap(id.xy + int2(blueX, blueY))].b;
             }
         }
     }
@@ -68,12 +73,11 @@ void CSMain(uint3 id : SV_DispatchThreadID)
    float green = _source[id.xy].y;
    float blue = _source[id.xy].z;
    int threshold = 2;
+   //threshold += 2 * rand(id.xy);
 
    // Green beats red
    if (red == 1) {
        if (neighborsGreen > threshold) {
-           red = 0;
-           green = 1;
            result = float4(0, 1, 0, 1);
        }
    }
@@ -81,8 +85,6 @@ void CSMain(uint3 id : SV_DispatchThreadID)
    // Blue beats green
    if (green == 1) {
        if (neighborsBlue > threshold) {
-           green = 0;
-           blue = 1;
            result = float4(0, 0, 1, 1);
        }
    }
@@ -90,9 +92,19 @@ void CSMain(uint3 id : SV_DispatchThreadID)
    // Red beats blue
    if (blue == 1) {
        if (neighborsRed > threshold) {
-           blue = 0;
-           red = 1;
            result = float4(1, 0, 0, 1);
+       }
+   }
+
+   if (red == 0 && green == 0 && blue == 0) {
+       if (neighborsRed > threshold) {
+           result = float4(1, 0, 0, 1);
+       }
+       else if (neighborsGreen > threshold) {
+           result = float4(0, 1, 0, 1);
+       }
+       else if (neighborsBlue > threshold) {
+           result = float4(0, 0, 1, 1);
        }
    }
 
