@@ -28,24 +28,66 @@ uint2 wrap(int2 pixel)
 [numthreads(8,8,1)]
 void CSMain (uint3 id : SV_DispatchThreadID)
 {
+    
+    float red = _source[id.xy].r;
+    float green = _source[id.xy].g;
+    float blue = _source[id.xy].b;
+    
+    int red_neighbors = 0;
+    int green_neighbors = 0;
+    int blue_neighbors = 0;
+    int threshold = 2;
 
-    int neighbors = 0;
-    // count blue neighbors
-  /*  for (int dx = -1; dx <= 1; dx++) {
+
+   // count red neighbors
+    for (int dx = -1; dx <= 1; dx++) {
         for (int dy = -1; dy <= 1; dy++) {
             if (dx != 0 || dy != 0) {
-                neighbors += _source[ wrap( id.xy + int2(dx, dy))].x;
+                red_neighbors += _source[ wrap( id.xy + int2(dx, dy))].x;
             }
         }
     }
-    */
+
+    // count green neighbors
+    for (int dx = -1; dx <= 1; dx++) {
+        for (int dy = -1; dy <= 1; dy++) {
+            if (dx != 0 || dy != 0) {
+                green_neighbors += _source[ wrap( id.xy + int2(dx, dy))].x;
+            }
+        }
+    }
+    
+    // count blue neighbors
+    for (int dx = -1; dx <= 1; dx++) {
+        for (int dy = -1; dy <= 1; dy++) {
+            if (dx != 0 || dy != 0) {
+                blue_neighbors += _source[ wrap( id.xy + int2(dx, dy))].x;
+            }
+        }
+    }
     // count red and green neighbors also
     // flip if the number of neighbouring cells that beats it is above a threshold. (start with 2)
     // Green beats Red, Blue beats Green, Red beats Blue.
+    // Green > Red, Blue > Green, Red > Blue
+
+    
+    if(red == 1 && green_neighbors > threshold){
+        red = 0;
+        green = 1;
+    }
+
+    if(green == 1 && blue_neighbors > threshold){
+        green = 0;
+        blue = 1;
+    }
+
+    if(blue == 1 && red_neighbors > threshold){
+        blue = 0;
+        red = 1;
+    }
+
 
     float4 result = _source[id.xy];
-
-
 
     _destination[id.xy] = result;
 }
