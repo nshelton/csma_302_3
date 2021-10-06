@@ -28,10 +28,11 @@ uint2 wrap(int2 pixel)
 [numthreads(8,8,1)]
 void CSMain (uint3 id : SV_DispatchThreadID)
 {
+    float4 result = _source[id.xy];
     
-    float red = _source[id.xy].r;
-    float green = _source[id.xy].g;
-    float blue = _source[id.xy].b;
+    bool red = (result[0] > 0.0);
+    bool green = (result[1] > 0.0);
+    bool blue = (result[2] > 0.0);
     
     int red_neighbors = 0;
     int green_neighbors = 0;
@@ -39,55 +40,38 @@ void CSMain (uint3 id : SV_DispatchThreadID)
     int threshold = 2;
 
 
-   // count red neighbors
-    for (int dx = -1; dx <= 1; dx++) {
-        for (int dy = -1; dy <= 1; dy++) {
-            if (dx != 0 || dy != 0) {
-                red_neighbors += _source[ wrap( id.xy + int2(dx, dy))].x;
-            }
-        }
-    }
-
-    // count green neighbors
-    for (int dx = -1; dx <= 1; dx++) {
-        for (int dy = -1; dy <= 1; dy++) {
-            if (dx != 0 || dy != 0) {
-                green_neighbors += _source[ wrap( id.xy + int2(dx, dy))].x;
-            }
-        }
-    }
-    
     // count blue neighbors
+    // count red and green neighbors also
     for (int dx = -1; dx <= 1; dx++) {
         for (int dy = -1; dy <= 1; dy++) {
             if (dx != 0 || dy != 0) {
-                blue_neighbors += _source[ wrap( id.xy + int2(dx, dy))].x;
+                float4 pixel = _source[wrap(id.xy + int2(dx, dy))];
+                if (pixel[0] > 0.0) {
+                    red_neighbors += 1;
+                }
+                if (pixel[1] > 0.0) {
+                    green_neighbors += 1;
+                }
+                if (pixel[2] > 0.0) {
+                    blue_neighbors += 1;
+                }
             }
         }
     }
-    // count red and green neighbors also
-    // flip if the number of neighbouring cells that beats it is above a threshold. (start with 2)
-    // Green beats Red, Blue beats Green, Red beats Blue.
+ 
     // Green > Red, Blue > Green, Red > Blue
-
-    
-    if(red == 1 && green_neighbors > threshold){
-        red = 0;
-        green = 1;
+    // flip if the number of neighbouring cells that beats it is above a threshold. (start with 2)
+    if (blue && red_neighbors > threshold) {
+        result = float4(1, 0, 0, 1);    //change to red
     }
 
-    if(green == 1 && blue_neighbors > threshold){
-        green = 0;
-        blue = 1;
+    if (red && green_neighbors > threshold) {
+        result = float4(0, 1, 0, 1);    //change to green
     }
 
-    if(blue == 1 && red_neighbors > threshold){
-        blue = 0;
-        red = 1;
+    if (green && blue_neighbors > threshold) {
+        result = float4(0, 0, 1, 1);    //change to blue
     }
-
-
-    float4 result = _source[id.xy];
 
     _destination[id.xy] = result;
 }
