@@ -9,7 +9,7 @@ public class reactionDiffusionPlane : MonoBehaviour
     [SerializeField] ComputeShader _shader;
     [SerializeField] ComputeShader _clearShader;
     [SerializeField] ComputeShader _drawShader;
-    [SerializeField] Material _visualizationMaterial;
+
     RenderTexture _resultA;
     RenderTexture _resultB;
 
@@ -22,12 +22,13 @@ public class reactionDiffusionPlane : MonoBehaviour
     [SerializeField] float _diffusionRateB = 0.05f;
     [SerializeField, Range(0, 20)] int _iterations = 10;
 
-    [SerializeField] bool _showDegubTexture;
+    [SerializeField] bool _showDebugTexture;
 
     int threadDim = 8;
     int _frameNum = 0;
 
     Vector3 _mousePos;
+    RaycastHit hit;
 
     void Start()
     {
@@ -48,7 +49,7 @@ public class reactionDiffusionPlane : MonoBehaviour
 
     private void Update()
     {
-        _mousePos = Input.mousePosition;
+
 
         if (Input.GetKeyDown(KeyCode.Space) || _frameNum == 0)
         {
@@ -56,12 +57,23 @@ public class reactionDiffusionPlane : MonoBehaviour
             _clearShader.Dispatch(0, _width / threadDim, _height / threadDim, 1);
         }
 
-        // user input
-        _drawShader.SetVector("_mouse", _mousePos);
 
-        //result A is the main texture and is drawing the main RGB to screen
-        _drawShader.SetTexture(0, "_destination", _resultA);
-        _drawShader.Dispatch(0, 1, 1, 1);
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            var worldPoint = hit.point;
+
+            worldPoint = transform.InverseTransformPoint(worldPoint);
+            float x = -worldPoint.x / 10.0f + 0.5f;
+            float z = -worldPoint.z / 10.0f + 0.5f;
+
+            var pixelCoord = new Vector2(_width * x, _height * z);
+
+            _drawShader.SetVector("_mouse", pixelCoord);
+            _drawShader.SetTexture(0, "_destination", _resultA);
+            _drawShader.Dispatch(0, 1, 1, 1);
+        }
 
         // run simulation
         _shader.SetFloat("_f", _feed);
@@ -74,15 +86,13 @@ public class reactionDiffusionPlane : MonoBehaviour
         {
             _shader.SetTexture(0, "_source", _resultA);
             _shader.SetTexture(0, "_destination", _resultB);
-
-            //threadDim is the numThreads(8, 8, 1)
             _shader.Dispatch(0, _width / threadDim, _height / threadDim, 1);
             Swap(ref _resultB, ref _resultA);
         }
         _frameNum++;
+
         _planeMaterial.SetTexture("_DispTex", _resultA);
         _planeMaterial.SetTexture("_MainTex", _resultA);
-
     }
 
     static void Swap(ref RenderTexture x, ref RenderTexture y)
@@ -92,10 +102,9 @@ public class reactionDiffusionPlane : MonoBehaviour
         y = tempswap;
     }
 
-    //destination is the screen
     private void OnGUI()
     {
-        if (_showDegubTexture)
+        if (_showDebugTexture)
         {
             var size = 100;
             GUI.DrawTexture(new Rect(0, 0, size, size), _resultA);

@@ -13,9 +13,8 @@ Shader "Tessellation Sample" {
             LOD 300
 
             CGPROGRAM
-            #pragma surface surf BlinnPhong addshadow fullforwardshadows vertex:disp tessellate:tessDistance nolightmap
+            #pragma surface surf BlinnPhong addshadow fullforwardshadows vertex:disp tessellate:tessFixed nolightmap
             #pragma target 4.6
-            #include "Tessellation.cginc"
 
             struct appdata {
                 float4 vertex : POSITION;
@@ -24,16 +23,14 @@ Shader "Tessellation Sample" {
                 float2 texcoord : TEXCOORD0;
             };
 
-            float _Tess;
-
-            float4 tessDistance(appdata v0, appdata v1, appdata v2) {
-                float minDist = 10.0;
-                float maxDist = 25.0;
-                return UnityDistanceBasedTess(v0.vertex, v1.vertex, v2.vertex, minDist, maxDist, _Tess);
-            }
-
             sampler2D _DispTex;
             float _Displacement;
+
+            float _Tess;
+            float4 tessFixed()
+            {
+                return _Tess;
+            }
 
             void disp(inout appdata v)
             {
@@ -50,7 +47,9 @@ Shader "Tessellation Sample" {
             fixed4 _Color;
 
             void surf(Input IN, inout SurfaceOutput o) {
-                half4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
+
+
+                half4 c = tex2D(_MainTex, IN.uv_MainTex).x * _Color;
                 o.Albedo = c.rgb;
                 o.Specular = 0.2;
                 o.Gloss = 1.0;
