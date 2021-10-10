@@ -159,8 +159,8 @@ MonoBehaviour:
   _drawShader: {fileID: 7200000, guid: be5997f53f7e3894b9a222ebe50a0dc9, type: 3}
   _visualizationMaterial: {fileID: 2100000, guid: a22464baca4cf0647b01fdf48828ecfe,
     type: 2}
-  _width: 256
-  _height: 256
+  _width: 1080
+  _height: 720
 --- !u!20 &963194227
 Camera:
   m_ObjectHideFlags: 0

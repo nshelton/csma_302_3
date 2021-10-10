@@ -2,12 +2,11 @@ Shader "Hidden/reactionDiffusion"
 {
     Properties
     {
-        _MainTex ("Texture", 2D) = "white" {}
+        _MainTex("Texture", 2D) = "white" {}
         _Colormap ("colormap", 2D) = "white" {}
-        _colorSelection("colorSelection", Range(0, 1)) = 1
-        _scale("scale", Range(0, 5)) = 1
-        _channel("channel", int) = 1
-
+        _colorSelection("_colorSelection", Range(0,1)) = 0.5
+        _scale("scale", Range(0,5)) = 1
+        _channel ("channel", Int) = 1
     }
     SubShader
     {
@@ -50,22 +49,27 @@ Shader "Hidden/reactionDiffusion"
 
             fixed4 frag (v2f i) : SV_Target
             {
-                fixed4 col = tex2D(_MainTex, i.uv);
+                float4 col = tex2D(_MainTex, i.uv);
                 float x = 0;
-
-                if (_channel = 0){
+                
+                if (_channel == 0) {
                     x = col.x;
                 }
-                if (_channel = 1){
+
+                if (_channel == 1) {
                     x = col.y;
-                } 
-                if (_channel = 2){
+                }
+                
+                if (_channel == 2) {
                     x = col.z;
                 }
 
+                x = pow(x, _scale);
+                
                 float2 colormapUV = float2(x, _colorSelection);
 
-                return tex2D(_Colormap, colormapUV);
+                return tex2D(_Colormap, saturate(colormapUV));
+
             }
             ENDCG
         }

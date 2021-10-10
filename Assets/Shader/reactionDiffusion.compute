@@ -25,5 +25,5 @@ void CSMain (uint3 id : SV_DispatchThreadID)
     float dA = laplacian.x * _diffusionRateA - A * B * B + _f * (1 - A);
     float dB = laplacian.y * _diffusionRateB + A * B * B - (_f + _k) * B;
 
-    _destination[id.xy] = _source[id.xy] + float4(dA, dB, 0, 0);
+    _destination[id.xy] = saturate(_source[id.xy] + float4(dA, dB, 0, 0));
 }
