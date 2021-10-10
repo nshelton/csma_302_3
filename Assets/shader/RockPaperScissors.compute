@@ -24,28 +24,71 @@ uint2 wrap(int2 pixel)
     return pixel;
 }
 
-
 [numthreads(8,8,1)]
 void CSMain (uint3 id : SV_DispatchThreadID)
 {
+    float4 result = _source[id.xy];
 
-    int neighbors = 0;
-    // count blue neighbors
-  /*  for (int dx = -1; dx <= 1; dx++) {
+    int blueNeighbors = 0;
+    int redNeighbors = 0;
+    int greenNeighbors = 0;
+    int blackNeighbors = 0;
+    
+
+    bool isBlue = (result[2] > 0.0);
+    bool isRed = (result[0] > 0.0);
+    bool isGreen = (result[1] > 0.0);
+    bool isBlack = (result[3] > 0.0);
+
+    // count neighbors
+    for (int dx = -1; dx <= 1; dx++) {
         for (int dy = -1; dy <= 1; dy++) {
             if (dx != 0 || dy != 0) {
-                neighbors += _source[ wrap( id.xy + int2(dx, dy))].x;
+                float4 cell = _source[wrap(id.xy + int2(dx, dy))];
+                if (cell[0] > 0.0) {
+                    redNeighbors += 1; //count red neighbors
+                }
+                if (cell[1] > 0.0) {
+                    greenNeighbors += 1; //count green neighbors
+                }
+                if (cell[2] > 0.0) {
+                    blueNeighbors += 1; //count blue neighbors
+                }
+                if (cell[3] > 0.0) {
+                    blackNeighbors += 1;
+                }
+                
             }
         }
     }
-    */
+
+    int threshold = 2;
+
+    if (isGreen && blueNeighbors > threshold) {
+        result = float4(0, 0, 1, 1);
+    }
+    if (isGreen && redNeighbors > threshold) {
+        result = float4(0, 1, 0, 1);
+    }
+
+    if (isBlue && redNeighbors > threshold) {
+        result = float4(1, 0, 0, 1);
+    }
+    if (isBlue && greenNeighbors > threshold) {
+        result = float4(0, 0, 1, 1);
+    }
+
+    if (isRed && greenNeighbors > threshold) {
+        result = float4(0, 1, 0, 1);
+    }
+    if (isRed && blueNeighbors > threshold) {
+        result = float4(1, 0, 0, 1);
+    }
+    
+
     // count red and green neighbors also
     // flip if the number of neighbouring cells that beats it is above a threshold. (start with 2)
     // Green beats Red, Blue beats Green, Red beats Blue.
-
-    float4 result = _source[id.xy];
-
-
 
     _destination[id.xy] = result;
 }
