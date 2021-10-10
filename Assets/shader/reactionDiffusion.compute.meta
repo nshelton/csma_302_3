@@ -3,6 +3,7 @@ guid: 06637d4368bd69340ae98c042ade2e62
 ComputeShaderImporter:
   externalObjects: {}
   currentAPIMask: 4
+  preprocessorOverride: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
