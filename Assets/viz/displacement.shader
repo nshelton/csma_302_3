@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 Shader "Custom/displacement"
 {
+=======
+Shader "Tessellation Sample" {
+>>>>>>> 6eef7458095dd557ad023465aca658d47e466692
     Properties{
         _Tess("Tessellation", Range(1,32)) = 4
         _MainTex("Base (RGB)", 2D) = "white" {}
@@ -59,4 +63,8 @@ Shader "Custom/displacement"
             ENDCG
         }
             FallBack "Diffuse"
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 6eef7458095dd557ad023465aca658d47e466692

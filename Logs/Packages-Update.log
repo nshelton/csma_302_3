@@ -45,7 +45,11 @@ The following packages were added:
   com.unity.timeline@1.2.18
   com.unity.ugui@1.0.0
 
+<<<<<<< HEAD
 === Sun Oct  3 13:31:19 2021
+=======
+=== Wed Sep 29 11:33:32 2021
+>>>>>>> 6eef7458095dd557ad023465aca658d47e466692
 
 Packages were changed.
 Update Mode: updateDependencies

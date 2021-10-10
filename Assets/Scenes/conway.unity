@@ -98,7 +98,11 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
+<<<<<<< HEAD
   m_LightingSettings: {fileID: 4890085278179872738, guid: e2ea535cba9b3fe4c9dc98168e284b9c,
+=======
+  m_LightingSettings: {fileID: 4890085278179872738, guid: c1d64be8b35d00f428cedcfc8d999465,
+>>>>>>> 6eef7458095dd557ad023465aca658d47e466692
     type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -151,6 +155,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   m_EditorHideFlags: 0
+<<<<<<< HEAD
   m_Script: {fileID: 11500000, guid: 72195d93ec4317c4cba46979af2f06a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -161,6 +166,18 @@ MonoBehaviour:
     type: 2}
   _width: 1080
   _height: 720
+=======
+  m_Script: {fileID: 11500000, guid: c4a9c018218c5bc48b98fa8fe62e728d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shader: {fileID: 7200000, guid: 0392a90707a67804a946d226a9987708, type: 3}
+  _clearShader: {fileID: 7200000, guid: 16feea3fcc0adfa47843a9bf08c08b9b, type: 3}
+  _drawShader: {fileID: 7200000, guid: be5997f53f7e3894b9a222ebe50a0dc9, type: 3}
+  _visualizationMaterial: {fileID: 2100000, guid: 5a266210cd280fc42ba008c18dc847f0,
+    type: 2}
+  _width: 256
+  _height: 256
+>>>>>>> 6eef7458095dd557ad023465aca658d47e466692
 --- !u!20 &963194227
 Camera:
   m_ObjectHideFlags: 0

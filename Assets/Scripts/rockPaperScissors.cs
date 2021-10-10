@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 using System.Collections;
+=======
+﻿using System.Collections;
+>>>>>>> 6eef7458095dd557ad023465aca658d47e466692
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -43,17 +47,29 @@ public class rockPaperScissors : MonoBehaviour
 
     private void Update()
     {
+<<<<<<< HEAD
         if ( Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
+=======
+        if ( Input.GetKeyDown(KeyCode.Alpha1))
+>>>>>>> 6eef7458095dd557ad023465aca658d47e466692
         {
             _currentColor = new Vector4(1, 0, 0, 1);
         }
 
+<<<<<<< HEAD
         if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
+=======
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+>>>>>>> 6eef7458095dd557ad023465aca658d47e466692
         {
             _currentColor = new Vector4(0, 1, 0, 1);
         }
 
+<<<<<<< HEAD
         if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))
+=======
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+>>>>>>> 6eef7458095dd557ad023465aca658d47e466692
         {
             _currentColor = new Vector4(0, 0, 1, 1);
         }
@@ -95,4 +111,8 @@ public class rockPaperScissors : MonoBehaviour
 
         Graphics.Blit(_resultA, destination);
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 6eef7458095dd557ad023465aca658d47e466692

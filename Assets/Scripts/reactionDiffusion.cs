@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 using System.Collections;
+=======
+﻿using System.Collections;
+>>>>>>> 6eef7458095dd557ad023465aca658d47e466692
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -85,4 +89,8 @@ public class reactionDiffusion : MonoBehaviour
 
         Graphics.Blit(_resultA, destination, _visualizationMaterial);
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 6eef7458095dd557ad023465aca658d47e466692
