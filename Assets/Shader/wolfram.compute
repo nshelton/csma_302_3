@@ -1,0 +1,78 @@
+#pragma kernel CSMain
+
+RWTexture2D<float4> _Result;
+uint _FrameNum;
+uint _Width;
+uint _Height;
+
+int _Rule;
+
+int wolfram(uint2 pixel) 
+{
+    int top = (int)_Result[pixel + uint2(0, 1)].x;
+    uint2 pixelL = uint2(pixel.x - 1 , pixel.y + 1);
+    if (pixelL.x < 0)
+        pixelL.x = _Width - 1;
+ 
+    int topL = (int)_Result[pixelL].x;
+
+    uint2 pixelR = uint2(pixel.x + 1, pixel.y + 1);
+    if (pixelR.x > _Width - 1)
+        pixelR.x = 0;
+
+    int topR = (int)_Result[pixelR].x;
+
+    int result = 0;
+ 
+    if (topL && top && topR) {
+        result = _Rule & 128;
+    }
+    else if (topL && top && !topR) {
+        result = _Rule & 64;
+    }
+    else if (topL && !top && topR) {
+        result = _Rule & 32;
+    }
+    else if (topL && !top && !topR) {
+        result = _Rule & 16;
+    } 
+    else if (!topL && top && topR) {
+        result = _Rule & 8;
+    }
+    else if (!topL && top && !topR) {
+        result = _Rule & 4;
+    }
+    else if (!topL && !top && topR) {
+        result = _Rule & 2;
+    }
+    else if (!topL && !top && !topR) {
+        result = _Rule & 1;
+    }
+
+    result = min(result, 1);
+   
+    return result;
+}
+
+[numthreads(8,1,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+    uint2 pixel = uint2(id.x, _Height - _FrameNum);
+
+    int result = 0;
+   
+    if (_FrameNum < 4)
+    {
+        if (id.x == _Width / 2) 
+        {
+            result = 1;
+        }
+    }
+    else {
+        result = wolfram(pixel);
+    }
+  
+    _Result[pixel] = (float4) result ;
+
+    // int 0 -> float4(0,0,0,0), int 1 -> float4(1,1,1,1)
+}
