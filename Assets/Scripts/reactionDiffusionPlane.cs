@@ -50,13 +50,11 @@ public class reactionDiffusionPlane : MonoBehaviour
     private void Update()
     {
         
-
         if (Input.GetKeyDown(KeyCode.Space) || _frameNum == 0)
         {
             _clearShader.SetTexture(0, "_Result", _resultA);
             _clearShader.Dispatch(0, _width / threadDim, _height / threadDim, 1);
         }
-
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 

@@ -33,7 +33,7 @@ Shader "Custom/instancedCubeShader"
 
         // instanced properties
         UNITY_INSTANCING_BUFFER_START(Props)
-            UNITY_DEFINE_INSTANCED_PROP(float2, _xy)
+        UNITY_DEFINE_INSTANCED_PROP(float2, _xy)
         UNITY_INSTANCING_BUFFER_END(Props)
 
         void surf (Input IN, inout SurfaceOutputStandard o)
