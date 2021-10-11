@@ -89,6 +89,7 @@ public class reactionDiffusionPlane : MonoBehaviour
             _shader.Dispatch(0, _width / threadDim, _height / threadDim, 1);
             Swap(ref _resultB, ref _resultA);
         }
+
         _frameNum++;
 
         _planeMaterial.SetTexture("_DispTex", _resultA);

@@ -1,9 +1,11 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class rockPaperScissors : MonoBehaviour
+public class rpsTesselation : MonoBehaviour
 {
+    [SerializeField] Material _planeMaterial;
+
     [SerializeField] ComputeShader _shader;
     [SerializeField] ComputeShader _clearShader;
     [SerializeField] ComputeShader _drawShader;
@@ -14,10 +16,15 @@ public class rockPaperScissors : MonoBehaviour
     [SerializeField] int _width = 512;
     [SerializeField] int _height = 512;
 
+    [SerializeField] bool _showDebugTexture;
+
     int threadDim = 8;
+    int _frameNum = 0;
 
     Vector3 _mousePos;
     Vector4 _currentColor;
+    RaycastHit hit;
+
     bool _mouseDown;
 
 
@@ -42,6 +49,8 @@ public class rockPaperScissors : MonoBehaviour
 
     private void Update()
     {
+
+        // user input
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             _currentColor = new Vector4(1, 0, 0, 1);
@@ -65,24 +74,28 @@ public class rockPaperScissors : MonoBehaviour
             _clearShader.SetTexture(0, "_Result", _resultA);
             _clearShader.Dispatch(0, _width / threadDim, _height / threadDim, 1);
         }
-    }
 
-    static void Swap(ref RenderTexture x, ref RenderTexture y)
-    {
-        RenderTexture tempswap = x;
-        x = y;
-        y = tempswap;
-    }
 
-    private void OnRenderImage(RenderTexture source, RenderTexture destination)
-    {
-        // user input
-        if (_mouseDown)
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out hit))
         {
-            _drawShader.SetVector("_mouse", _mousePos);
-            _drawShader.SetVector("_Color", _currentColor);
-            _drawShader.SetTexture(0, "_destination", _resultA);
-            _drawShader.Dispatch(0, 1, 1, 1);
+            var worldPoint = hit.point;
+
+            worldPoint = transform.InverseTransformPoint(worldPoint);
+            float x = -worldPoint.x / 10.0f + 0.5f;
+            float z = -worldPoint.z / 10.0f + 0.5f;
+
+            var pixelCoord = new Vector2(_width * x, _height * z);
+
+            // user input
+            if (_mouseDown)
+            {
+                _drawShader.SetVector("_mouse", _mousePos);
+                _drawShader.SetVector("_Color", _currentColor);
+                _drawShader.SetTexture(0, "_destination", _resultA);
+                _drawShader.Dispatch(0, 1, 1, 1);
+            }
         }
 
         _shader.SetTexture(0, "_source", _resultA);
@@ -92,6 +105,26 @@ public class rockPaperScissors : MonoBehaviour
         _shader.Dispatch(0, _width / threadDim, _height / threadDim, 1);
         Swap(ref _resultB, ref _resultA);
 
-        Graphics.Blit(_resultA, destination);
+        _frameNum++;
+
+        _planeMaterial.SetVector("_Color", _currentColor);
+        _planeMaterial.SetTexture("_DispTex", _resultA);
+        _planeMaterial.SetTexture("_MainTex", _resultA);
+    }
+
+    static void Swap(ref RenderTexture x, ref RenderTexture y)
+    {
+        RenderTexture tempswap = x;
+        x = y;
+        y = tempswap;
+    }
+
+    private void OnGUI()
+    {
+        if (_showDebugTexture)
+        {
+            var size = 100;
+            GUI.DrawTexture(new Rect(0, 0, size, size), _resultA);
+        }
     }
 }
