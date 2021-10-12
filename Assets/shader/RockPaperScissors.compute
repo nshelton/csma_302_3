@@ -1,0 +1,92 @@
+﻿#pragma kernel CSMain
+
+RWTexture2D<float4> _source;
+RWTexture2D<float4> _destination;
+
+float _width;
+float _height;
+
+uint2 wrap(int2 pixel) 
+{
+    if (pixel.x < 0) {
+        pixel.x += _width;
+    }
+    if (pixel.y < 0) {
+        pixel.y += _height;
+    }
+    if (pixel.x >= _width) {
+        pixel.x -= _width;
+    }
+    if (pixel.y >= _height) {
+        pixel.y -= _height;
+    }
+
+    return pixel;
+}
+
+
+[numthreads(8,8,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+    float4 result = _source[id.xy];
+
+    
+    int neighborR = 0;
+    int neighborG = 0;
+    int neighborB = 0;
+    
+
+    bool isRed = (result[0] > 0.0);
+    bool isGreen = (result[1] > 0.0);
+    bool isBlue = (result[2] > 0.0);
+
+    // count neighbors
+    for (int dx = -1; dx <= 1; dx++) {
+        for (int dy = -1; dy <= 1; dy++) {
+            if (dx != 0 || dy != 0) {
+                float4 cell = _source[wrap(id.xy + int2(dx, dy))];
+                if (cell[0] > 0.0) {
+                    neighborR += 1;
+                }
+                if (cell[1] > 0.0) {
+                    neighborG += 1;
+                }
+                if (cell[2] > 0.0) {
+                    neighborB += 1;
+                }
+            }
+        }
+    }
+    
+    // Green beats Red, Blue beats Green, Red beats Blue.
+    int threshold = 2;
+
+    if (isRed && neighborG > threshold)
+    {
+        result = float4(0, 1, 0, 1);
+    }
+    if (isRed && neighborB > threshold)
+    {
+        result = float4(1, 0, 0, 1);
+    }
+
+    if (isGreen && neighborR > threshold)
+    {
+        result = float4(0, 1, 0, 1);
+    }
+    if (isGreen && neighborB > threshold)
+    {
+        result = float4(0, 0, 1, 1);
+    }
+
+    if (isBlue && neighborR > threshold)
+    {
+        result = float4(1, 0, 0, 1);
+    }
+    if (isBlue && neighborG > threshold)
+    {
+        result = float4(0, 0, 1, 1);
+    }
+
+    _destination[id.xy] = result;
+}
